@@ -6,6 +6,8 @@
     :prefix-icon="Search"
   />
   <Loader v-if="searchStore.isLoading" class="mt-10" />
+  <el-empty v-else-if="isShowPlaceholder" description="Movies not found!">
+  </el-empty>
   <el-carousel
     v-else
     height="500px"
@@ -23,10 +25,11 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { computed } from "vue";
 import Loader from "@/components/TheLoader.vue";
 import MovieCard from "@/components/MovieCard.vue";
 import { Search } from "@element-plus/icons-vue";
-import { ref } from "vue";
 import { useSearchStore } from "@/store/search";
 import { useMovieStore } from "~/store/movies.js";
 import debounce from "@/utils/debounce.js";
@@ -34,6 +37,10 @@ import debounce from "@/utils/debounce.js";
 const searchMovie = ref("");
 const searchStore = useSearchStore();
 const moviesStore = useMovieStore();
+
+const isShowPlaceholder = computed(() => {
+  return !searchStore.movies.length && searchMovie.value;
+});
 
 watch(
   searchMovie,

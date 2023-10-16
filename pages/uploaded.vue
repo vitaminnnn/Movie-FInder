@@ -16,7 +16,7 @@
       </NuxtLink>
     </el-carousel-item>
   </el-carousel>
-  <el-empty v-else>
+  <el-empty v-else description="Movies not found!">
     <el-button type="success" @click="goToAddMoviePage">Add Movie</el-button>
   </el-empty>
 </template>
